@@ -45,6 +45,9 @@ namespace DynamicControls
             newControl.Text = (++incrementalNumber).ToString();
 
             Controls.Add(newControl);
+
+            
+            newControl.BringToFront();
             
         }
     }
