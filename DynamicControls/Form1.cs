@@ -19,6 +19,7 @@ namespace DynamicControls
     {
         //zentrale Einstellungen/Variablen 
         Color defaultBackColor;
+        int incrementalNumber;
         public GUI()
         {
             InitializeComponent();
@@ -28,6 +29,7 @@ namespace DynamicControls
         private void init()
         {
             defaultBackColor = Color.LightCyan;
+            incrementalNumber = 0;
         }
 
         private void GUI_MouseClick(object sender, MouseEventArgs e)
@@ -40,6 +42,7 @@ namespace DynamicControls
             newControl.BackColor = defaultBackColor;
             newControl.Size = controlSize;
             newControl.Location = startPoint;
+            newControl.Text = (++incrementalNumber).ToString();
 
             Controls.Add(newControl);
             
