@@ -34,7 +34,7 @@ namespace DynamicControls
         {
             // Abmessungen der Controls festlegen
             Size controlSize = new Size(30, 30);
-            Point startPoint = new Point(e.X, e.Y);
+            Point startPoint = new Point(e.X-controlSize.Width/2, e.Y-controlSize.Height/2);
 
             Control newControl = new Button();
             newControl.BackColor = defaultBackColor;
