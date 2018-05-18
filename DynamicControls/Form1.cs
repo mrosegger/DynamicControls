@@ -8,13 +8,41 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/*Dynamic Controls
+ * Dynamic control elements
+ * 18.05.2018
+ * Max Rosegger*/
+
 namespace DynamicControls
 {
-    public partial class Form1 : Form
+    public partial class GUI : Form
     {
-        public Form1()
+        //zentrale Einstellungen/Variablen 
+        Color defaultBackColor;
+        public GUI()
         {
             InitializeComponent();
+            init();
+        }
+
+        private void init()
+        {
+            defaultBackColor = Color.LightCyan;
+        }
+
+        private void GUI_MouseClick(object sender, MouseEventArgs e)
+        {
+            // Abmessungen der Controls festlegen
+            Size controlSize = new Size(30, 30);
+            Point startPoint = new Point(e.X, e.Y);
+
+            Control newControl = new Button();
+            newControl.BackColor = defaultBackColor;
+            newControl.Size = controlSize;
+            newControl.Location = startPoint;
+
+            Controls.Add(newControl);
+            
         }
     }
 }

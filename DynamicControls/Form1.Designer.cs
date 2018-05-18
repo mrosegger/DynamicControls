@@ -1,6 +1,6 @@
 ﻿namespace DynamicControls
 {
-    partial class Form1
+    partial class GUI
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -28,9 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // GUI
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "GUI";
+            this.Text = "Dynamic Controls";
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.GUI_MouseClick);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
