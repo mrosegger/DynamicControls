@@ -20,6 +20,7 @@ namespace DynamicControls
         //zentrale Einstellungen/Variablen 
         Color defaultBackColor;
         int incrementalNumber;
+        int buttonsOnScreen;
         public GUI()
         {
             InitializeComponent();
@@ -30,6 +31,7 @@ namespace DynamicControls
         {
             defaultBackColor = Color.LightCyan;
             incrementalNumber = 0;
+            buttonsOnScreen = 0;
         }
 
         private void GUI_MouseClick(object sender, MouseEventArgs e)
@@ -43,12 +45,21 @@ namespace DynamicControls
             newControl.Size = controlSize;
             newControl.Location = startPoint;
             newControl.Text = (++incrementalNumber).ToString();
+            newControl.Click += Control_Click;
 
             Controls.Add(newControl);
+            countElementsOnScreen.Text = $"{(++buttonsOnScreen).ToString()} buttons";
 
-            
             newControl.BringToFront();
             
+        }
+
+        private void Control_Click(object sender, EventArgs e)
+        {
+            Control currentControl = (Control)sender;
+            Controls.Remove(currentControl);
+            currentControl.Click -= Control_Click;
+            countElementsOnScreen.Text = $"{(--buttonsOnScreen).ToString()} buttons";
         }
     }
 }
