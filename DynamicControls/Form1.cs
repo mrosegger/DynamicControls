@@ -22,6 +22,7 @@ namespace DynamicControls
         Color defaultBackColor;
         int incrementalNumber;
         int buttonsOnScreen;
+        bool colorAlreadySet;
         public GUI()
         {
             InitializeComponent();
@@ -30,7 +31,7 @@ namespace DynamicControls
 
         private void init()
         {
-            colorSelect = new Color[] { Color.LightGreen, Color.Orange, Color.Red };
+            colorSelect = new Color[] { Color.LightGreen, Color.Orange, Color.Red, Color.Blue};
             defaultBackColor = colorSelect[0];
             incrementalNumber = 0;
             buttonsOnScreen = 0;
@@ -41,8 +42,19 @@ namespace DynamicControls
             // Abmessungen der Controls festlegen
             Size controlSize = new Size(30, 30);
             Point startPoint = new Point(e.X-controlSize.Width/2, e.Y-controlSize.Height/2);
-
-            Control newControl = new Button();
+            Control newControl;
+            if (selButton.Checked)
+            {
+                newControl = new Button();
+            }
+            else if (selTextbox.Checked)
+            {
+                newControl = new TextBox();
+            }
+            else
+            {
+                newControl = new Label();
+            }
             newControl.BackColor = defaultBackColor;
             newControl.Size = controlSize;
             newControl.Location = startPoint;
@@ -50,7 +62,7 @@ namespace DynamicControls
             newControl.Click += Control_Click;
 
             Controls.Add(newControl);
-            countElementsOnScreen.Text = $"{(++buttonsOnScreen).ToString()} buttons";
+            countElementsOnScreen.Text = $"{(++buttonsOnScreen).ToString()} controls";
 
             newControl.BringToFront();
             
@@ -59,22 +71,24 @@ namespace DynamicControls
         private void Control_Click(object sender, EventArgs e)
         {
             Control currentControl = (Control)sender;
-
+            colorAlreadySet = false;
             //Farbwechsel und entfernen
-            if (currentControl.BackColor == colorSelect[0])
+            for (int index = 0; index < colorSelect.Length; index++)
             {
-                currentControl.BackColor = colorSelect[1];
-            }
-            else if (currentControl.BackColor == colorSelect[1])
-            {
-                currentControl.BackColor = colorSelect[2];
-            }
-            else
-            {
-                Controls.Remove(currentControl);
-                currentControl.Click -= Control_Click;
-                countElementsOnScreen.Text = $"{(--buttonsOnScreen).ToString()} buttons";
+                if (currentControl.BackColor == colorSelect[colorSelect.Length - 1] && !colorAlreadySet)
+                {
+                    Controls.Remove(currentControl);
+                    currentControl.Click -= Control_Click;
+                    countElementsOnScreen.Text = $"{(--buttonsOnScreen).ToString()} controls";
+                    colorAlreadySet = true;
+                }
+                else if (currentControl.BackColor == colorSelect[index] && !colorAlreadySet)
+                {
+                    currentControl.BackColor = colorSelect[index+1];
+                    colorAlreadySet = true;
+                }
             }
         }
+
     }
 }
