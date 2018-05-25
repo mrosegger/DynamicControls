@@ -18,6 +18,7 @@ namespace DynamicControls
     public partial class GUI : Form
     {
         //zentrale Einstellungen/Variablen 
+        Color[] colorSelect;
         Color defaultBackColor;
         int incrementalNumber;
         int buttonsOnScreen;
@@ -29,7 +30,8 @@ namespace DynamicControls
 
         private void init()
         {
-            defaultBackColor = Color.LightCyan;
+            colorSelect = new Color[] { Color.LightGreen, Color.Orange, Color.Red };
+            defaultBackColor = colorSelect[0];
             incrementalNumber = 0;
             buttonsOnScreen = 0;
         }
@@ -57,9 +59,22 @@ namespace DynamicControls
         private void Control_Click(object sender, EventArgs e)
         {
             Control currentControl = (Control)sender;
-            Controls.Remove(currentControl);
-            currentControl.Click -= Control_Click;
-            countElementsOnScreen.Text = $"{(--buttonsOnScreen).ToString()} buttons";
+
+            //Farbwechsel und entfernen
+            if (currentControl.BackColor == colorSelect[0])
+            {
+                currentControl.BackColor = colorSelect[1];
+            }
+            else if (currentControl.BackColor == colorSelect[1])
+            {
+                currentControl.BackColor = colorSelect[2];
+            }
+            else
+            {
+                Controls.Remove(currentControl);
+                currentControl.Click -= Control_Click;
+                countElementsOnScreen.Text = $"{(--buttonsOnScreen).ToString()} buttons";
+            }
         }
     }
 }
