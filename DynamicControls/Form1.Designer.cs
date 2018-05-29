@@ -80,6 +80,7 @@
             // tmrAnimation
             // 
             this.tmrAnimation.Enabled = true;
+            this.tmrAnimation.Interval = 10;
             this.tmrAnimation.Tick += new System.EventHandler(this.tmrAnimation_Tick);
             // 
             // GUI

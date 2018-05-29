@@ -24,6 +24,7 @@ namespace DynamicControls
         int buttonsOnScreen;
         bool colorAlreadySet;
         List<Control> DynamicControls;
+        Random rndGEn;
         public GUI()
         {
             InitializeComponent();
@@ -34,9 +35,11 @@ namespace DynamicControls
         {
             colorSelect = new Color[] { Color.LightGreen, Color.Orange, Color.Red, Color.Blue};
             DynamicControls = new List<Control>();
+            rndGEn = new Random();
             defaultBackColor = colorSelect[0];
             incrementalNumber = 0;
             buttonsOnScreen = 0;
+            DoubleBuffered = Enabled;
         }
 
         private void GUI_MouseClick(object sender, MouseEventArgs e)
@@ -97,10 +100,50 @@ namespace DynamicControls
 
         private void tmrAnimation_Tick(object sender, EventArgs e)
         {
+            int maxSpeed = 50;
             foreach (Control currentControl in DynamicControls)
             {
-                currentControl.Left += 1;
+                Rectangle validSpace = GetValidSpace(currentControl);
+                Point nextLocation = GetNewLocation(maxSpeed, currentControl, validSpace);
+                currentControl.Location = nextLocation;
             }
+        }
+
+        private Point GetNewLocation(int maxSpeed, Control currentControl, Rectangle validSpace)
+        {
+            int deltaX = rndGEn.Next(-maxSpeed, maxSpeed + 1);
+            int deltaY = rndGEn.Next(-maxSpeed, maxSpeed + 1);
+            Point currentLocation = currentControl.Location;
+            if (currentLocation.X < validSpace.Left)
+            {
+                deltaX = maxSpeed;
+            }
+            else if (currentLocation.X > validSpace.Right)
+            {
+                deltaX = -maxSpeed;
+            }
+
+            if (currentLocation.Y < validSpace.Top)
+            {
+                deltaY = maxSpeed;
+            }
+            else if (currentLocation.Y > validSpace.Bottom)
+            {
+                deltaY = -maxSpeed;
+            }
+
+            currentLocation.Offset(deltaX, deltaY);
+            return currentLocation;
+        }
+
+        private Rectangle GetValidSpace(Control currentControl)
+        {
+            int minX = 0;
+            int minY = 0;
+            int maxX = ClientSize.Width - currentControl.Width;
+            int maxY = ClientSize.Height - currentControl.Height;
+            Rectangle validSpace = new Rectangle(minX, minY, maxX - minX, maxY - minY);
+            return validSpace;
         }
     }
 }
