@@ -50,6 +50,7 @@ namespace DynamicControls
             else if (selTextbox.Checked)
             {
                 newControl = new TextBox();
+                ((TextBox)newControl).ReadOnly = true;
             }
             else
             {
