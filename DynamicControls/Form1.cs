@@ -23,6 +23,7 @@ namespace DynamicControls
         int incrementalNumber;
         int buttonsOnScreen;
         bool colorAlreadySet;
+        List<Control> DynamicControls;
         public GUI()
         {
             InitializeComponent();
@@ -32,6 +33,7 @@ namespace DynamicControls
         private void init()
         {
             colorSelect = new Color[] { Color.LightGreen, Color.Orange, Color.Red, Color.Blue};
+            DynamicControls = new List<Control>();
             defaultBackColor = colorSelect[0];
             incrementalNumber = 0;
             buttonsOnScreen = 0;
@@ -63,6 +65,7 @@ namespace DynamicControls
             newControl.Click += Control_Click;
 
             Controls.Add(newControl);
+            DynamicControls.Add(newControl);
             countElementsOnScreen.Text = $"{(++buttonsOnScreen).ToString()} controls";
 
             newControl.BringToFront();
@@ -79,6 +82,7 @@ namespace DynamicControls
                 if (currentControl.BackColor == colorSelect[colorSelect.Length - 1] && !colorAlreadySet)
                 {
                     Controls.Remove(currentControl);
+                    DynamicControls.Remove(currentControl);
                     currentControl.Click -= Control_Click;
                     countElementsOnScreen.Text = $"{(--buttonsOnScreen).ToString()} controls";
                     colorAlreadySet = true;
@@ -91,5 +95,12 @@ namespace DynamicControls
             }
         }
 
+        private void tmrAnimation_Tick(object sender, EventArgs e)
+        {
+            foreach (Control currentControl in DynamicControls)
+            {
+                currentControl.Left += 1;
+            }
+        }
     }
 }

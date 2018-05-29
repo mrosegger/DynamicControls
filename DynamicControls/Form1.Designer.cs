@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.countElementsOnScreen = new System.Windows.Forms.Label();
             this.selButton = new System.Windows.Forms.RadioButton();
             this.selTextbox = new System.Windows.Forms.RadioButton();
             this.selLabel = new System.Windows.Forms.RadioButton();
+            this.tmrAnimation = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // countElementsOnScreen
@@ -75,6 +77,11 @@
             this.selLabel.Text = "Label";
             this.selLabel.UseVisualStyleBackColor = true;
             // 
+            // tmrAnimation
+            // 
+            this.tmrAnimation.Enabled = true;
+            this.tmrAnimation.Tick += new System.EventHandler(this.tmrAnimation_Tick);
+            // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -98,6 +105,7 @@
         private System.Windows.Forms.RadioButton selButton;
         private System.Windows.Forms.RadioButton selTextbox;
         private System.Windows.Forms.RadioButton selLabel;
+        private System.Windows.Forms.Timer tmrAnimation;
     }
 }
 
